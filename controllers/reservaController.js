@@ -117,3 +117,14 @@ exports.filtrarReservasPorRangoDeFechas = (req, res) => {
         res.status(404).json({ error: "No se encontraron reservas en el rango de fechas especificado" });
     }
 };
+
+
+exports.filtrarReservasPorEstado = (req, res) => {
+    const estado = req.params.estado;
+    console.log("Estado recibido:", estado); // Para depuración
+    
+    const reservas = leerReservas();
+    const reservasFiltradas = reservas.filter(reserva => reserva.estado.toLowerCase() === estado.toLowerCase());
+
+    res.status(200).json(reservasFiltradas);
+};

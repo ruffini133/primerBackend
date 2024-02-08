@@ -28,6 +28,9 @@
  *         type: string
  *         format: date
  *         description: Fecha de fin de la reserva (en formato YYYY-MM-DD)
+ *       estado:
+ *         type: string
+ *         description: Estado de la reserva (por ejemplo, "pendiente", "confirmada", etc.)
  */
 
 const express = require('express');
@@ -253,9 +256,30 @@ router.get('/filtrarPorTipoHabitacion/:tipo_habitacion', reservaController.filtr
  *               items:
  *                 $ref: '#/definitions/Reserva'
  */
-router.get('/filtrarPorFechas/:fecha_inicio/:fecha_fin', reservaController.filtrarReservasPorRangoDeFechas);
 
-
-
+/**
+ * @swagger
+ * /reservas/filtrarPorEstado/{estado}:
+ *   get:
+ *     summary: Filtra las reservas por estado.
+ *     tags: [Reservas]
+ *     parameters:
+ *       - in: path
+ *         name: estado
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Estado de la reserva para filtrar las reservas.
+ *     responses:
+ *       200:
+ *         description: Lista de reservas filtradas por el estado especificado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Reserva'
+ */
+router.get('/filtrarPorEstado/:estado', reservaController.filtrarReservasPorEstado);
 
 module.exports = router;
