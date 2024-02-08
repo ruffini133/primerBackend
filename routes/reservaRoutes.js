@@ -196,5 +196,31 @@ router.get('/filtrar/:hotel', reservaController.filtrarReservasPorHotel);
  */
 router.get('/filtrarPorNumHuespedes/:numHuespedes', reservaController.filtrarReservasPorNumHuespedes);
 
+/**
+ * @swagger
+ * /reservas/filtrarPorTipoHabitacion/{tipo_habitacion}:
+ *   get:
+ *     summary: Filtra las reservas por tipo de habitación.
+ *     tags: [Reservas]
+ *     parameters:
+ *       - in: path
+ *         name: tipo_habitacion
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Tipo de habitación para filtrar las reservas.
+ *     responses:
+ *       200:
+ *         description: Lista de reservas filtradas por el tipo de habitación especificado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Reserva'
+ */
+router.get('/filtrarPorTipoHabitacion/:tipo_habitacion', reservaController.filtrarReservasPorTipoHabitacion);
+
+
 
 module.exports = router;

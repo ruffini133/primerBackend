@@ -2,7 +2,7 @@
   {
     "id": 1,
     "hotel": "paradigma",
-    "tipo_habitacion": "sencilla",
+    "tipo_habitacion": "doble",
     "num_huespedes": 4,
     "fecha_inicio": "2024-02-08",
     "fecha_fin": "2024-02-08"

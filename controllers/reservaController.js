@@ -83,3 +83,14 @@ exports.filtrarReservasPorNumHuespedes = (req, res) => {
         res.status(404).json({ error: "No se encontraron reservas con ese número de huéspedes" });
     }
 };
+
+exports.filtrarReservasPorTipoHabitacion = (req, res) => {
+    const tipoHabitacion = req.params.tipo_habitacion;
+    console.log("Tipo de habitación recibido:", tipoHabitacion); // Agregado para depuración
+    const reservas = leerReservas();
+    const reservasFiltradas = reservas.filter(reserva => reserva.tipo_habitacion.toLowerCase() === tipoHabitacion.toLowerCase());
+
+    res.status(200).json(reservasFiltradas);
+};
+
+
