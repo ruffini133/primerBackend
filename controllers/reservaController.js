@@ -9,6 +9,7 @@ const leerReservas = () => {
     return JSON.parse(data);
 };
 
+
 exports.crearReserva = (req, res) => {
     const nuevasReservas = leerReservas();
     const nuevaReserva = { id: uuidv4(), ...req.body };
@@ -54,4 +55,31 @@ exports.eliminarReserva = (req, res) => {
     fs.writeFileSync(reservasFilePath, JSON.stringify(nuevasReservas, null, 2));
 
     res.status(204).end();
+};
+
+exports.filtrarReservasPorHotel = (req, res) => {
+    const { hotel } = req.params; // Obtenemos el parámetro de la ruta
+    const reservas = leerReservas(); // Obtenemos las reservas
+    let reservasFiltradas = reservas; // Inicializamos con todas las reservas
+
+    // Filtramos las reservas por el hotel especificado
+    if (hotel) {
+        reservasFiltradas = reservasFiltradas.filter(reserva => reserva.hotel.toLowerCase() === hotel.toLowerCase());
+    }
+
+    res.json(reservasFiltradas); // Enviamos las reservas filtradas como respuesta
+};
+
+exports.filtrarReservasPorNumHuespedes = (req, res) => {
+    const numHuespedes = parseInt(req.params.numHuespedes, 10);
+    const reservas = leerReservas(); // Usamos leerReservas para obtener todas las reservas del archivo JSON
+
+    // Filtramos las reservas por el número de huéspedes
+    const reservasFiltradas = reservas.filter(reserva => reserva.num_huespedes === numHuespedes);
+
+    if (reservasFiltradas.length) {
+        res.status(200).json(reservasFiltradas);
+    } else {
+        res.status(404).json({ error: "No se encontraron reservas con ese número de huéspedes" });
+    }
 };

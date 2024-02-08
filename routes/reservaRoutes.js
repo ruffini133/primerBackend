@@ -144,6 +144,57 @@ router.put('/:id', reservaController.actualizarReserva);
  *       204:
  *         description: Reserva eliminada satisfactoriamente
  */
-router.delete('/:id', reservaController.eliminarReserva);
+
+/**
+ * @swagger
+ * /reservas/filtrar/{hotel}:
+ *   get:
+ *     summary: Filtra las reservas por hotel
+ *     tags: [Reservas]
+ *     parameters:
+ *       - in: path
+ *         name: hotel
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Nombre del hotel para filtrar las reservas
+ *     responses:
+ *       200:
+ *         description: Lista de reservas filtradas por el hotel especificado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Reserva'
+ */
+
+router.get('/filtrar/:hotel', reservaController.filtrarReservasPorHotel);
+
+/**
+ * @swagger
+ * /reservas/filtrarPorNumHuespedes/{numHuespedes}:
+ *   get:
+ *     summary: Filtra las reservas por número de huéspedes
+ *     tags: [Reservas]
+ *     parameters:
+ *       - in: path
+ *         name: numHuespedes
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Número de huéspedes para filtrar las reservas
+ *     responses:
+ *       200:
+ *         description: Lista de reservas filtradas por el número de huéspedes especificado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Reserva'
+ */
+router.get('/filtrarPorNumHuespedes/:numHuespedes', reservaController.filtrarReservasPorNumHuespedes);
+
 
 module.exports = router;
