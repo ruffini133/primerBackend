@@ -94,3 +94,26 @@ exports.filtrarReservasPorTipoHabitacion = (req, res) => {
 };
 
 
+exports.filtrarReservasPorRangoDeFechas = (req, res) => {
+    const fechaInicio = req.params.fecha_inicio;
+    const fechaFin = req.params.fecha_fin;
+    console.log("Fecha de inicio recibida:", fechaInicio); // Para depuración
+    console.log("Fecha de fin recibida:", fechaFin); // Para depuración
+    
+    const reservas = leerReservas();
+    const reservasFiltradas = reservas.filter(reserva => {
+        // Convertir las fechas de inicio y fin de las reservas al mismo formato que las fechas recibidas
+        const fechaInicioReserva = new Date(reserva.fecha_inicio).toISOString().split('T')[0];
+        const fechaFinReserva = new Date(reserva.fecha_fin).toISOString().split('T')[0];
+        
+        // Verificar si la fecha de inicio de la reserva está dentro del rango especificado
+        // y si la fecha de fin de la reserva también está dentro del rango
+        return fechaInicioReserva >= fechaInicio && fechaFinReserva <= fechaFin;
+    });
+
+    if (reservasFiltradas.length > 0) {
+        res.status(200).json(reservasFiltradas);
+    } else {
+        res.status(404).json({ error: "No se encontraron reservas en el rango de fechas especificado" });
+    }
+};

@@ -222,5 +222,40 @@ router.get('/filtrarPorNumHuespedes/:numHuespedes', reservaController.filtrarRes
 router.get('/filtrarPorTipoHabitacion/:tipo_habitacion', reservaController.filtrarReservasPorTipoHabitacion);
 
 
+/**
+ * @swagger
+ * /reservas/filtrarPorFechas/{fecha_inicio}/{fecha_fin}:
+ *   get:
+ *     summary: Filtra las reservas por rango de fechas. A veces no funciona (rezar un padre nuestro para que funcione).
+ *     tags: [Reservas]
+ *     parameters:
+ *       - in: path
+ *         name: fecha_inicio
+ *         schema:
+ *           type: string
+ *           format: date
+ *         required: true
+ *         description: Fecha de inicio del rango de fechas en formato YYYY-MM-DD.
+ *       - in: path
+ *         name: fecha_fin
+ *         schema:
+ *           type: string
+ *           format: date
+ *         required: true
+ *         description: Fecha de fin del rango de fechas en formato YYYY-MM-DD.
+ *     responses:
+ *       200:
+ *         description: Lista de reservas filtradas por el rango de fechas especificado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Reserva'
+ */
+router.get('/filtrarPorFechas/:fecha_inicio/:fecha_fin', reservaController.filtrarReservasPorRangoDeFechas);
+
+
+
 
 module.exports = router;
